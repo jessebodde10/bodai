@@ -3,7 +3,10 @@ import { CalEmbed } from "./CalEmbed";
 
 export function CTA() {
   return (
-    <section id="contact" className="scroll-mt-20 border-t border-line py-32">
+    <section
+      id="contact"
+      className="scroll-mt-20 overflow-hidden border-t border-line py-32"
+    >
       <div className="mx-auto max-w-5xl px-6 lg:px-8">
         <Reveal>
           <div className="relative text-center">
