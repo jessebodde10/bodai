@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const CAL_LINK = "leadz-systems-2yvqzu";
 
@@ -56,7 +56,29 @@ function loadCal(): CalApi {
 }
 
 export function CalEmbed() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [shouldLoad, setShouldLoad] = useState(false);
+
+  /* pas het zware cal.com-script en de iframe laden zodra de widget in beeld komt,
+     zodat elke paginabezoeker dit niet ongevraagd hoeft te downloaden */
   useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          setShouldLoad(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "400px" }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!shouldLoad) return;
     const theme =
       document.documentElement.dataset.theme === "light" ? "light" : "dark";
     const Cal = loadCal();
@@ -75,11 +97,12 @@ export function CalEmbed() {
       hideEventTypeDetails: false,
       layout: "month_view",
     });
-  }, []);
+  }, [shouldLoad]);
 
   return (
     <div
       id="cal-inline"
+      ref={containerRef}
       className="overflow-hidden rounded-2xl border border-line bg-card"
       style={{ width: "100%", minHeight: 640 }}
     />

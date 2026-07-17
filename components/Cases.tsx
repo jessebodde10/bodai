@@ -122,6 +122,7 @@ export function Cases() {
                     alt={`Screenshot van ${p.title}`}
                     width={1280}
                     height={3200}
+                    sizes="(min-width: 1024px) 580px, (min-width: 640px) 45vw, 100vw"
                     className="w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]"
                     style={{ height: "auto", minHeight: "100%" }}
                   />

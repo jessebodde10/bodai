@@ -56,6 +56,7 @@ export function AboutJesse() {
                 alt="Jesse, oprichter van Bodai"
                 width={832}
                 height={1129}
+                sizes="(min-width: 1024px) 560px, (min-width: 768px) 448px, 100vw"
                 className="h-full w-full object-cover"
                 priority={false}
               />
